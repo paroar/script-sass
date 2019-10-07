@@ -1,0 +1,36 @@
+#!/bin/bash
+
+folder=("abstracts" "vendors" "base" "layout" "components" "pages" "themes");
+abstracts=("variables" "functions" "mixins" "placeholders");
+vendors=("bootstrap" "jquery-ui");
+base=("reset" "typography");
+layout=("navigation" "grid" "header" "footer" "sidebar" "forms");
+components=("buttons" "carousel" "cover" "dropdown");
+pages=("home" "contact");
+themes=("theme" "admin");
+
+import()
+{
+    var=$1;
+    for file in ${!var}; do
+        echo "$var$file" | tr -d "[]" | tr "@" "/";
+    done
+}
+
+loop()
+{
+    for folder in ${folder[@]}; do
+        current="$folder[@]"
+        $1 "$current";
+    done
+}
+
+mkdir sass css;
+for x in ${folder[@]}; do
+    mkdir -p sass/$x;
+    loop "import" | grep "$x" | cut -d "/" -f 2 | xargs -I{} touch sass/$x/_{}.scss;
+done
+echo "" > sass/main.scss;
+folder[0]="abstracts";
+loop "import" | xargs -I{} echo "@import '{}';" >> sass/main.scss;
+
