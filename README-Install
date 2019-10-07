@@ -1,3 +1,0 @@
-#Move/copy sass71 file to /usr/bin => mv path/from/origin /usr/bin
-#Add executable permission to the sass71 file => sudo chmod +x /usr/bin/sass71
-#Now you can use the command "sass71" to create sass architecture 7-1
